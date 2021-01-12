@@ -20,6 +20,7 @@ ckpt_dir=model/scan/scan
 exp_name=test3
 arch=soft
 
+
 # Submit job
 bsub -W $TIME \
      -n $NUM_CPUS \
