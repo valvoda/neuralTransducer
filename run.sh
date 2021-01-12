@@ -9,6 +9,7 @@ CPU_RAM=1024  # RAM for each core (default: 1024)
 #OUTFILE=lsf.oJOBID  # default: lsf.oJOBID
 
 # Load modules
+
 module load gcc/6.3.0 python_gpu/3.7.4 hdf5/1.10.1
 
 # Submit job
