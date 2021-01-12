@@ -42,5 +42,5 @@ bsub -W $TIME \
      --epochs 50 \
      --bs 1 \
      --cleanup_anyway \
-     --total_eval -1 \
+     --total_eval 1 \
      --max_steps 100000"
