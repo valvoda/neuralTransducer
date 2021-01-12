@@ -40,7 +40,7 @@ bsub -W $TIME \
      --gpuid 0 \
      --estop 1e-8 \
      --epochs 50 \
-     --bs 1 \
+     --bs 512 \
      --cleanup_anyway \
      --total_eval 1 \
      --max_steps 100000"
