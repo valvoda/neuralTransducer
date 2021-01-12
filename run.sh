@@ -17,7 +17,7 @@ gpu=0
 train_dir=SCAN/tasks_train_simple.txt
 test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
-exp_name=test2
+exp_name=test3
 arch=soft
 
 # Submit job
@@ -43,4 +43,4 @@ bsub -W $TIME \
      --bs 512 \
      --cleanup_anyway \
      --total_eval 1 \
-     --max_steps 100000"
+     --max_steps 10000"
