@@ -70,7 +70,6 @@ class BaseTrainer(object):
 
         self.data = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.logger.info("device:", self.device)
         self.model = None
         self.optimizer = None
         self.min_lr = 0

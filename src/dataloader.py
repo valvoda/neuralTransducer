@@ -262,20 +262,14 @@ class AlignSeq2SeqDataLoader(Seq2SeqDataLoader):
 class SCAN(Seq2SeqDataLoader):
     def read_file(self, file):
         with open(file, "r", encoding="utf-8") as fp:
-            max_len_src = []
-            max_len_trg = []
             for line in fp.readlines():
                 target_raw = line.split("OUT:")[1].strip()
                 source_raw = line.split("OUT:")[0].split("IN:")[1].strip()
 
                 target = target_raw.split(" ")
                 source = source_raw.split(" ")
-                max_len_trg.append(len(target))
-                max_len_src.append(len(source))
 
-            print(max(max_len_trg))
-            print(max(max_len_src))
-        yield source, target
+                yield source, target
 
 class SIGMORPHON2017Task1(Seq2SeqDataLoader):
     def build_vocab(self):
