@@ -25,6 +25,8 @@ bsub -W $TIME \
      -R "rusage[mem=${CPU_RAM},ngpus_excl_p=${NUM_GPUS}]" \
      -R "select[gpu_model0==${GPU_MODEL}]" \
      -R "select[gpu_mtotal0>=30000]" \
+     "source ~/.bashrc;" \
+     "conda activate precedent;" \
       CUDA_VISIBLE_DEVICES=$gpu python src/train.py \
       --dataset scan \
       --train $train_dir \
