@@ -73,3 +73,5 @@ INFO - 01/12/21 13:35:54 - 0:00:00 - evaluate every 1 epochs
 INFO - 01/12/21 13:35:54 - 0:00:00 - At 0-th epoch with lr 0.001000.
 INFO - 01/12/21 13:38:26 - 0:02:32 - Running average train loss is 0.3008655659062176 at epoch 0
 INFO - 01/12/21 13:38:26 - 0:02:32 - At 1-th epoch with lr 0.001000.
+INFO - 01/12/21 13:41:12 - 0:05:19 - Running average train loss is 0.11732636306661859 at epoch 1
+INFO - 01/12/21 13:41:57 - 0:06:03 - Average dev loss is 0.07529923615569924 at epoch 1
