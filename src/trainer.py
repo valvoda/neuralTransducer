@@ -370,7 +370,7 @@ class BaseTrainer(object):
         if params.total_eval > 0:
             eval_every = max(max_epochs // params.total_eval, 1)
         else:
-            eval_every = 1
+            eval_every = 0.1
         self.logger.info(f"evaluate every {eval_every} epochs")
         for epoch_idx in range(start_epoch, max_epochs):
             self.train(epoch_idx, params.bs, params.max_norm)

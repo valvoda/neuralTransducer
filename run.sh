@@ -17,7 +17,7 @@ gpu=0
 train_dir=SCAN/tasks_train_simple.txt
 test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
-exp_name=test
+exp_name=test2
 arch=soft
 
 # Submit job
@@ -31,15 +31,16 @@ bsub -W $TIME \
      python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/scan/${exp_name} --embed_dim 100 \
      --src_hs 200 \
      --trg_hs 200 \
-     --dropout 0.2 \
+     --dropout 0.5 \
      --src_layer 2 \
-     --trg_layer 1 \
+     --trg_layer 2 \
      --max_norm 5 \
      --shuffle \
      --arch ${arch} \
      --gpuid 0 \
      --estop 1e-8 \
      --epochs 50 \
-     --bs 256 \
+     --bs 1 \
      --cleanup_anyway \
-     --total_eval 1"
+     --total_eval -1 \
+     --max_steps 100000"
