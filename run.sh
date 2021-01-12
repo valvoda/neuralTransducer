@@ -17,7 +17,7 @@ gpu=0
 train_dir=SCAN/tasks_train_simple.txt
 test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
-
+exp = speed
 arch=soft
 
 # Submit job
@@ -28,4 +28,19 @@ bsub -W $TIME \
      -R "select[gpu_mtotal0>=30000]" \
      "source ~/.bashrc; \
      conda activate precedent; \
-     python src/train.py --dataset scan --train SCAN/tasks_train_simple.txt --dev SCAN/tasks_train_simple.txt --test SCAN/tasks_test_simple.txt --model model/scan/scan1 --embed_dim 100 --src_hs 200 --trg_hs 200 --dropout 0.2 --src_layer 2 --trg_layer 1 --max_norm 5 --shuffle --arch soft --gpuid 0 --estop 1e-8 --epochs 50 --bs 256 --cleanup_anyway"
+     python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/scan/${exp} \
+     --embed_dim 100 \
+     --src_hs 200 \
+     --trg_hs 200 \
+     --dropout 0.2 \
+     --src_layer 2 \
+     --trg_layer 1 \
+     --max_norm 5 \
+     --shuffle \
+     --arch ${arch} \
+     --gpuid 0 \
+     --estop 1e-8 \
+     --epochs 50 \
+     --bs 256 \
+     --cleanup_anyway \
+     --total_eval 1"
