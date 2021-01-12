@@ -28,7 +28,7 @@ bsub -W $TIME \
      -R "select[gpu_mtotal0>=30000]" \
      "source ~/.bashrc;" \
      conda activate precedent; \
-      CUDA_VISIBLE_DEVICES=$gpu python src/train.py \
+      python src/train.py \
       --dataset scan \
       --train $train_dir \
       --dev $train_dir \
