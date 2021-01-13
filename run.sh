@@ -19,6 +19,7 @@ test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
 exp_name=test3
 
+
 for arch in soft hard softinputfeed largesoftinputfeed approxihard \
 approxihardinputfeed hmm hmmfull transformer universaltransformer \
 tagtransformer taguniversaltransformer
