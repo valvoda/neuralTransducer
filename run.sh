@@ -19,9 +19,9 @@ test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
 exp_name=test3
 
-for arch in soft, hard, softinputfeed, largesoftinputfeed, approxihard, \
-approxihardinputfeed, hmm, hmmfull, transformer, universaltransformer, \
-tagtransformer, taguniversaltransformer
+for arch in soft hard softinputfeed largesoftinputfeed approxihard \
+approxihardinputfeed hmm hmmfull transformer universaltransformer \
+tagtransformer taguniversaltransformer
 do
   # Submit job
   bsub -W $TIME \
@@ -43,7 +43,7 @@ do
        --gpuid 0 \
        --estop 1e-8 \
        --epochs 50 \
-       --bs 1 \
+       --bs 512 \
        --cleanup_anyway \
        --total_eval 1 \
        --max_steps 100000"
