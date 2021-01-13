@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Job details
-TIME=01:00  # HH:MM (default: 04:00, max: 240:00)
+TIME=24:00  # HH:MM (default: 04:00, max: 240:00)
 NUM_GPUS=1  # GPUs per node
 GPU_MODEL=TeslaV100_SXM2_32GB #GeForceGTX1080Ti  # Choices: GeForceGTX1080,GeForceGTX1080Ti,GeForceRTX2080Ti,TeslaV100_SXM2_32GB
 NUM_CPUS=1  # Number of cores (default: 1)
@@ -31,7 +31,7 @@ do
        -R "select[gpu_mtotal0>=30000]" \
        "source ~/.bashrc; \
        conda activate precedent; \
-       python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/scan/${arch} --embed_dim 100 \
+       python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/basic/${arch} --embed_dim 100 \
        --src_hs 200 \
        --trg_hs 200 \
        --dropout 0.5 \
