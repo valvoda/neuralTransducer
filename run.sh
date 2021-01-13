@@ -18,30 +18,34 @@ train_dir=SCAN/tasks_train_simple.txt
 test_dir=SCAN/tasks_test_simple.txt
 ckpt_dir=model/scan/scan
 exp_name=test3
-arch=soft
 
+for arch in soft, hard, softinputfeed, largesoftinputfeed, approxihard, \
+approxihardinputfeed, hmm, hmmfull, transformer, universaltransformer, \
+tagtransformer, taguniversaltransformer
+do
+  # Submit job
+  bsub -W $TIME \
+       -n $NUM_CPUS \
+       -R "rusage[mem=${CPU_RAM},ngpus_excl_p=${NUM_GPUS}]" \
+       -R "select[gpu_model0==${GPU_MODEL}]" \
+       -R "select[gpu_mtotal0>=30000]" \
+       "source ~/.bashrc; \
+       conda activate precedent; \
+       python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/scan/${arch} --embed_dim 100 \
+       --src_hs 200 \
+       --trg_hs 200 \
+       --dropout 0.5 \
+       --src_layer 2 \
+       --trg_layer 2 \
+       --max_norm 5 \
+       --shuffle \
+       --arch ${arch} \
+       --gpuid 0 \
+       --estop 1e-8 \
+       --epochs 50 \
+       --bs 1 \
+       --cleanup_anyway \
+       --total_eval 1 \
+       --max_steps 100000"
+done
 
-# Submit job
-bsub -W $TIME \
-     -n $NUM_CPUS \
-     -R "rusage[mem=${CPU_RAM},ngpus_excl_p=${NUM_GPUS}]" \
-     -R "select[gpu_model0==${GPU_MODEL}]" \
-     -R "select[gpu_mtotal0>=30000]" \
-     "source ~/.bashrc; \
-     conda activate precedent; \
-     python src/train.py --dataset scan --train ${train_dir} --dev ${train_dir} --test ${test_dir}  --model model/scan/${exp_name} --embed_dim 100 \
-     --src_hs 200 \
-     --trg_hs 200 \
-     --dropout 0.5 \
-     --src_layer 2 \
-     --trg_layer 2 \
-     --max_norm 5 \
-     --shuffle \
-     --arch ${arch} \
-     --gpuid 0 \
-     --estop 1e-8 \
-     --epochs 50 \
-     --bs 1 \
-     --cleanup_anyway \
-     --total_eval 1 \
-     --max_steps 100000"
