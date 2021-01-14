@@ -13,9 +13,10 @@ CPU_RAM=16384  # RAM for each core (default: 1024)
 module load gcc/6.3.0 python_gpu/3.7.4 hdf5/1.10.1
 
 # Submit job
-for arch in soft hard softinputfeed largesoftinputfeed approxihard \
-approxihardinputfeed hmm hmmfull transformer universaltransformer \
-tagtransformer taguniversaltransformer
+for arch in soft
+#hard softinputfeed largesoftinputfeed approxihard \
+#approxihardinputfeed hmm hmmfull transformer universaltransformer \
+#tagtransformer taguniversaltransformer
 do
   for train_dir in 1000exp1
   do
