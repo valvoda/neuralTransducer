@@ -18,7 +18,8 @@ def run():
                 nn_dirs = os.listdir(nn_path)
                 for nnd in nn_dirs:
                     exp_path = os.path.join(nn_path, nnd)
-                    print(exp_path)
+                    if exp_path.endswith(".log"):
+                        print(exp_path)
                     # try:
                     #     with open(exp_path, 'r') as f:
                     #         lines = f.readlines()
@@ -28,6 +29,8 @@ def run():
                     #     pass
             except:
                 exp_path = os.path.join(n_path, nd)
-                print(exp_path)
+                if exp_path.endswith(".log"):
+                    print(exp_path)
+
 if __name__ == '__main__':
     run()
