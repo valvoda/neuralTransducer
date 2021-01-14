@@ -14,7 +14,8 @@ def run():
         n_dirs = os.listdir(n_path)
         for nd in n_dirs:
             nn_path = os.path.join(n_path, nd)
-            for nnd in nn_path:
+            nn_dirs = os.listdir(nn_path)
+            for nnd in nn_dirs:
                 exp_path = os.path.join(nn_path, nnd)
                 print(exp_path)
                 # try:
