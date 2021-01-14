@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Job details
-TIME=11:59  # HH:MM (default: 04:00, max: 240:00)
+TIME=05:59  # HH:MM (default: 04:00, max: 240:00)
 NUM_GPUS=1  # GPUs per node
 GPU_MODEL=GeForceGTX1080Ti #GeForceGTX1080Ti  # Choices: GeForceGTX1080,GeForceGTX1080Ti,GeForceRTX2080Ti,TeslaV100_SXM2_32GB
 NUM_CPUS=1  # Number of cores (default: 1)
