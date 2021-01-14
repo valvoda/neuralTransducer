@@ -8,14 +8,24 @@ import os
 
 def run():
     paths = get_paths()
+    all_acc = get_acc(paths)
+    for i, j in zip(paths,all_acc):
+        print(i, j)
+
+def get_acc(paths):
+    all_acc = []
     for p in paths:
         try:
             with open(p, 'r') as f:
                 lines = f.readlines()
                 lines = [l.strip("\n") for l in lines]
-                print(lines[-1])
+                result = lines[-1]
+                acc = result.split(" acc ")[1].split(" ")[0]
+                all_acc.append(acc)
         except:
-            pass
+            all_acc.append(-1)
+
+    return all_acc
 
 
 def get_paths():
