@@ -9,6 +9,7 @@ import os
 def run():
     paths = get_paths()
     all_acc = get_acc(paths)
+
     for i, j in zip(paths,all_acc):
         print(i, j)
 
@@ -20,13 +21,12 @@ def get_acc(paths):
                 lines = f.readlines()
                 lines = [l.strip("\n") for l in lines]
                 result = lines[-1]
-                acc = result.split(" acc ")[1].split(" ")[0]
+                acc = float(result.split(" acc ")[1].split(" ")[0])
                 all_acc.append(acc)
         except:
             all_acc.append(-1)
 
     return all_acc
-
 
 def get_paths():
     all_paths = []
@@ -49,6 +49,7 @@ def get_paths():
                     all_paths.append(exp_path)
 
     return all_paths
+
 
 if __name__ == '__main__':
     run()
