@@ -18,7 +18,7 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for train_dir in 1000exp1
+  for train_dir in 100exp1
   do
     for experiment in {0..99}
     do
