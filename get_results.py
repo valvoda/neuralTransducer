@@ -7,6 +7,19 @@ experiment/dataset/result_model1/result_model2...
 import os
 
 def run():
+    paths = get_paths()
+    for p in paths:
+        try:
+            with open(p, 'r') as f:
+                lines = f.readlines()
+                lines = [l.strip("\n") for l in lines]
+                print(lines[-1])
+        except:
+            pass
+
+
+def get_paths():
+    all_paths = []
     src_path = "./model"
     dirs = os.listdir("./model")
     for d in dirs:
@@ -19,18 +32,13 @@ def run():
                 for nnd in nn_dirs:
                     exp_path = os.path.join(nn_path, nnd)
                     if exp_path.endswith(".log"):
-                        print(exp_path)
-                    # try:
-                    #     with open(exp_path, 'r') as f:
-                    #         lines = f.readlines()
-                    #         lines = [l.strip("\n") for l in lines]
-                    #         print(lines[-1])
-                    # except:
-                    #     pass
+                        all_paths.append(exp_path)
             except:
                 exp_path = os.path.join(n_path, nd)
                 if exp_path.endswith(".log"):
-                    print(exp_path)
+                    all_paths.append(exp_path)
+
+    return all_paths
 
 if __name__ == '__main__':
     run()
