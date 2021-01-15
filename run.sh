@@ -30,7 +30,7 @@ do
            -R "select[gpu_mtotal0>=30000]" \
            "source ~/.bashrc; \
            conda activate precedent; \
-           python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model new_model/${train_dir}/${arch}/${experiment} --embed_dim 100 \
+           python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model short_model/${train_dir}/${arch}/${experiment} --embed_dim 100 \
            --src_hs 200 \
            --trg_hs 200 \
            --dropout 0.5 \
