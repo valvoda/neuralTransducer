@@ -325,13 +325,13 @@ class BaseTrainer(object):
         self.model = None
         self.logger.info(f"loading {best_fp} for testing")
         self.load_model(best_fp)
-        self.calc_loss(DEV, bs, -1)
-        self.logger.info("decoding dev set")
-        self.decode(DEV, f"{model_fp}.decode", decode_fn)
-        results = self.evaluate(DEV, -1, decode_fn)
-        if results:
-            results = " ".join([f"{r.desc} {r.res}" for r in results])
-            self.logger.info(f'DEV {model_fp.split("/")[-1]} {results}')
+        # self.calc_loss(DEV, bs, -1)
+        # self.logger.info("decoding dev set")
+        # self.decode(DEV, f"{model_fp}.decode", decode_fn)
+        # results = self.evaluate(DEV, -1, decode_fn)
+        # if results:
+        #     results = " ".join([f"{r.desc} {r.res}" for r in results])
+        #     self.logger.info(f'DEV {model_fp.split("/")[-1]} {results}')
 
         if self.data.test_file is not None:
             self.calc_loss(TEST, bs, -1)
