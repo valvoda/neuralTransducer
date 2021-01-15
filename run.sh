@@ -18,9 +18,9 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for train_dir in 100exp1
+  for train_dir in 100exp1 1000exp1
   do
-    for experiment in {0..99}
+    for experiment in 0
     do
       # Submit job
       bsub -W $TIME \
@@ -42,7 +42,7 @@ do
            --gpuid 0 \
            --estop 1e-8 \
            --epochs 50 \
-           --bs 512 \
+           --bs 64 \
            --cleanup_anyway \
            --total_eval 1 \
            --max_steps 100000"
