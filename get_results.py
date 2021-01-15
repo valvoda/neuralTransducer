@@ -3,7 +3,7 @@ collect results for all models
 place them in an excel
 experiment/dataset/result_model1/result_model2...
 """
-
+import argparse
 import os
 import csv
 
@@ -75,4 +75,6 @@ def get_paths():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path", type=str, default="model", required=False)
     run()
