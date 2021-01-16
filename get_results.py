@@ -56,8 +56,8 @@ class Display():
 
     def get_paths(self):
         all_paths = []
-        src_path = "./model"
-        dirs = os.listdir("./model")
+        src_path = self.path
+        dirs = os.listdir(src_path)
         for d in dirs:
             n_path = os.path.join(src_path, d)
             n_dirs = os.listdir(n_path)
