@@ -18,10 +18,10 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for experiment in 0
+  for experiment in {1..99}
   do
     # 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run
-    for train_dir in 200exp1_run 300exp1_run 500exp1_run 700exp1_run 900exp1_run
+    for train_dir in 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run 200exp1_run 300exp1_run 500exp1_run 700exp1_run 900exp1_run
     do
       # Submit job
       bsub -W $TIME \
