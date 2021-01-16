@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Job details
-TIME=04:00  # HH:MM (default: 04:00, max: 240:00)
+TIME=24:00  # HH:MM (default: 04:00, max: 240:00)
 NUM_GPUS=1  # GPUs per node
-GPU_MODEL=GeForceGTX1080Ti #GeForceGTX1080Ti  # Choices: GeForceGTX1080,GeForceGTX1080Ti,GeForceRTX2080Ti,TeslaV100_SXM2_32GB
+GPU_MODEL=TeslaV100_SXM2_32GB #GeForceGTX1080Ti  # Choices: GeForceGTX1080,GeForceGTX1080Ti,GeForceRTX2080Ti,TeslaV100_SXM2_32GB
 NUM_CPUS=1  # Number of cores (default: 1)
 CPU_RAM=16384  # RAM for each core (default: 1024)
-#OUTFILE=lsf.oJOBID  # default: lsf.oJOBID
+OUTFILE=./logs/model3.oJOBID  # default: lsf.oJOBID
 
 # Load modules
 
@@ -18,9 +18,9 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for train_dir in 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run
+  for experiment in 0
   do
-    for experiment in 0
+    for train_dir in 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run
     do
       # Submit job
       bsub -W $TIME \
@@ -30,7 +30,7 @@ do
            -R "select[gpu_mtotal0>=30000]" \
            "source ~/.bashrc; \
            conda activate precedent; \
-           python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model short_model/${train_dir}/${arch}/${experiment} --embed_dim 100 \
+           python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model model3/${train_dir}/${arch}/${experiment} --embed_dim 100 \
            --src_hs 200 \
            --trg_hs 200 \
            --dropout 0.5 \
@@ -45,7 +45,7 @@ do
            --bs 64 \
            --cleanup_anyway \
            --total_eval 1 \
-           --max_steps 10000"
+           --max_steps 100000"
     done
   done
 done
