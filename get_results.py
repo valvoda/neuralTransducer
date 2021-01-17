@@ -25,7 +25,8 @@ class Display():
         for p, a in zip(paths, all_acc):
             node = int(p.split('/')[1].strip('exp1_run'))
             i = int(p.split('/')[-1].strip('.log'))
-            print(node, i)
+            print(p)
+            print(node, a)
             if node in res_dic.keys():
                 res_dic[node][i] = a
             else:
