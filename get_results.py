@@ -32,11 +32,9 @@ class Display():
             node = int(re.sub(r'exp1_run', '', node))
             i = int(p.split('/')[-1].strip('.log'))
             if node in res_dic.keys():
-                res_dic[node][i] = a
+                res_dic[node].append(a)
             else:
-                res = [-1]*10
-                res[i] = a
-                res_dic[node] = res
+                res_dic[node] = [a]
 
         res_dic = collections.OrderedDict(sorted(res_dic.items()))
 
@@ -52,15 +50,17 @@ class Display():
         #         if i != -1:
         #             plt.scatter(key, i, label=key)
 
-        import pdb
-        pdb.set_trace()
+        # import pdb
+        # pdb.set_trace()
 
         df = pd.DataFrame.from_dict(res_dic, orient='index')
-        df.index.rename('States', inplace=True)
-        stacked = df.stack().reset_index()
-        stacked.rename(columns={'level_1': 'States', 0: 'Acc'}, inplace=True)
+        df.index.rename('Observation', inplace=True)
 
-        sns.swarmplot(data=stacked, x='States', y='Acc')
+        stacked = df.stack().reset_index()
+        stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
+
+        g = sns.regplot(data=stacked, x='Observation', y='Value', hue='Observation', scatter=True, order=2)
+        g.legend_.remove()
 
         plt.savefig('all_results.png')
         # plt.close()
