@@ -51,11 +51,11 @@ class Display():
         # pdb.set_trace()
 
         df = pd.DataFrame.from_dict(res_dic, orient='index')
-        df.index.rename('Observation', inplace=True)
+        df.index.rename('# States', inplace=True)
 
         stacked = df.stack().reset_index()
-        stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
-        sns.regplot(data=stacked, x='Observation', y='Value', scatter=True, order=4)
+        stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
+        sns.regplot(data=stacked, x='# States', y='Acc', scatter=True, order=2)
         plt.savefig('all_results.png')
 
     def get_acc(self, paths):
