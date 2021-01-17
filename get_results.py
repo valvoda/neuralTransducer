@@ -48,14 +48,14 @@ class Display():
                 nodes += res_dic[key]
                 r_writer.writerow(nodes)
 
-        # import pdb
-        # pdb.set_trace()
-
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
         p1 = sns.color_palette("viridis", as_cmap=True)
         sns.set_palette(p1)
+
+        # import pdb
+        # pdb.set_trace()
 
         x = np.linspace(-1, 2, 100)
         y = np.exp(x)
