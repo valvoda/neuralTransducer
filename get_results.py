@@ -55,7 +55,7 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('States', inplace=True)
         stacked = df.stack().reset_index()
-        # stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
+        stacked.rename(columns={'level_1': 'States', 0: 'Acc'}, inplace=True)
 
         sns.swarmplot(data=stacked, x='States', y='Acc')
 
