@@ -52,6 +52,9 @@ class Display():
         #         if i != -1:
         #             plt.scatter(key, i, label=key)
 
+        import pdb
+        pdb.set_trace()
+
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('States', inplace=True)
         stacked = df.stack().reset_index()
