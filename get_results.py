@@ -28,8 +28,6 @@ class Display():
             node = p.split('/')[1]
             node = int(re.sub(r'exp1_run', '', node))
             i = int(p.split('/')[-1].strip('.log'))
-            print(p)
-            print(node, a)
             if node in res_dic.keys():
                 res_dic[node][i] = a
             else:
