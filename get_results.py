@@ -53,7 +53,7 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
-        sns.color_palette("viridis", as_cmap=True)
+        sns.set_palette("viridis")
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
