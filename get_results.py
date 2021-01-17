@@ -46,7 +46,7 @@ class Display():
                 r_writer.writerow(nodes)
 
         for key in res_dic:
-            plt.scatter([key] * 8, res_dic[key], label=key)
+            plt.scatter([key] * 10, res_dic[key], label=key)
 
         plt.savefig('results.png')
 
