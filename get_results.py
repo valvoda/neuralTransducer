@@ -58,11 +58,12 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
-        sns.set_palette(sns.color_palette("Paired"))
+        sns.set(style="whitegrid")
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
-        g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States", style='Acc', legend=False)
+        g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States", legend=False, palette='viridis')
+        g.set_xticks(np.arange(10, 100, 10))
 
         x = np.array(list(res_dic.keys()))
         y = np.array([np.array(i).mean() for i in res_dic.values()])
@@ -70,13 +71,15 @@ class Display():
         p0 = (1., 1.e-5, 1.)  # starting search koefs
         opt, pcov = curve_fit(model_func, x, y, p0)
         a, k, b = opt
+        a = a+50
+        k = k+0.03
         x2 = np.linspace(10, 100, 1000)
         y2 = model_func(x2, a, k, b)
 
         plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
-        # plt.legend(loc='best')
+        plt.legend(loc='best')
+        plt.savefig('100_results.png', dpi=300)
         plt.show()
-        # plt.savefig('100_results.png', dpi=300)
 
     def get_acc(self, paths):
         all_acc = []
