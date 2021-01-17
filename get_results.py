@@ -11,6 +11,7 @@ import collections
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import numpy as np
 
 class Display():
     def __init__(self, path):
@@ -53,12 +54,17 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
-        sns.set_palette("viridis")
+        p1 = sns.color_palette("viridis", as_cmap=True)
+        sns.set_palette(p1)
+
+        x = np.linspace(-1, 2, 100)
+        y = np.exp(x)
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
         g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States")
         g.legend_.remove()
+        plt.plot(x, y)
         plt.savefig('all_results.png')
 
     def get_acc(self, paths):
