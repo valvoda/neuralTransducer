@@ -8,6 +8,7 @@ import os
 import csv
 import re
 import collections
+import matplotlib.pyplot as plt
 
 class Display():
     def __init__(self, path):
@@ -43,6 +44,11 @@ class Display():
                 nodes = [key]
                 nodes += res_dic[key]
                 r_writer.writerow(nodes)
+
+        for key in res_dic:
+            plt.scatter([key] * 8, res_dic[key], label=key)
+
+        plt.savefig('results.png')
 
     def get_acc(self, paths):
         all_acc = []
