@@ -7,6 +7,7 @@ import argparse
 import os
 import csv
 import re
+import collections
 
 class Display():
     def __init__(self, path):
@@ -32,9 +33,11 @@ class Display():
             if node in res_dic.keys():
                 res_dic[node][i] = a
             else:
-                res = [0]*10
+                res = [-1]*10
                 res[i] = a
                 res_dic[node] = res
+
+        res_dic = collections.OrderedDict(sorted(res_dic.items()))
 
         with open('results.csv', mode='w') as r_file:
             r_writer = csv.writer(r_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
