@@ -6,6 +6,7 @@ experiment/dataset/result_model1/result_model2...
 import argparse
 import os
 import csv
+import re
 
 class Display():
     def __init__(self, path):
@@ -23,7 +24,8 @@ class Display():
     def save_sheet(self, paths, all_acc):
         res_dic = dict()
         for p, a in zip(paths, all_acc):
-            node = int(p.split('/')[1].strip('exp1_run'))
+            node = p.split('/')[1]
+            node = int(re.sub(r'exp1_run', '', node))
             i = int(p.split('/')[-1].strip('.log'))
             print(p)
             print(node, a)
