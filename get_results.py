@@ -59,6 +59,7 @@ class Display():
                     plt.scatter(key, i, label=key)
 
         plt.savefig('10_results.png')
+        plt.close()
 
     def get_acc(self, paths):
         all_acc = []
