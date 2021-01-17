@@ -18,26 +18,26 @@ class Display():
         for i, j in zip(paths,all_acc):
             print(i, j)
 
+        self.save_sheet(paths, all_acc)
+
     def save_sheet(self, paths, all_acc):
-
-        for p in paths:
-            p = p[1:]
-            p = p.strip(".log")
-            model_type = p.split("/")[1:]
-            if len(model_type) == 2:
-                data_name = "scan"
-                model_name = model_type[1]
-                exp_type = "exp1"
+        res_dic = dict()
+        for p, a in zip(paths, all_acc):
+            node = int(p.split('/')[1].strip('exp1_run'))
+            i = int(p.split('/')[-1].strip('.log'))
+            if node in res_dic.keys():
+                res_dic[node][i] = a
             else:
-                data_name = model_type[2]
-                model_name = model_type[1]
-                exp_type = model_type[0]
+                res = list(range(10))
+                res[i] = a
+                res_dic[node] = res
 
-    # with open('results.csv', mode='w') as r_file:
-    #     r_writer = csv.writer(r_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    #     r_writer.writerow([data_name, exp_type, soft, hard, softinputfeed, largesoftinputfeed, approxihard,
-    #                        approxihardinputfeed, hmm, hmmfull, transformer, universaltransformer, tagtransformer,
-    #                        taguniversaltransformer])
+        with open('results.csv', mode='w') as r_file:
+            r_writer = csv.writer(r_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for key in res_dic.keys():
+                nodes = [key]
+                nodes += res_dic[key]
+                r_writer.writerow(nodes)
 
     def get_acc(self, paths):
         all_acc = []
