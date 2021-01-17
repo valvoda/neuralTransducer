@@ -12,6 +12,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import numpy as np
+from scipy.optimize import curve_fit
+
+
+# define type of function to search
+def model_func(x, a, k, b):
+    return a * np.exp(-k * x) + b
 
 class Display():
     def __init__(self, path):
@@ -33,6 +39,7 @@ class Display():
                 node = p.split('/')[1]
                 node = int(re.sub(r'exp1_run', '', node))
                 if node <= 100:
+                # if True:
                     i = int(p.split('/')[-1].strip('.log'))
                     if node in res_dic.keys():
                         res_dic[node].append(a)
@@ -51,21 +58,26 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
-        p1 = sns.color_palette("viridis", as_cmap=True)
-        sns.set_palette(p1)
-
-        # import pdb
-        # pdb.set_trace()
-
-        x = np.linspace(-1, 2, 100)
-        y = np.exp(x)
+        sns.set_palette("viridis")
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
         g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States")
         g.legend_.remove()
-        plt.plot(x, y)
-        plt.savefig('all_results.png')
+
+        x = np.array(list(res_dic.keys()))
+        y = np.array([i[0] for i in res_dic.values()])
+
+        p0 = (1., 1.e-5, 1.)  # starting search koefs
+        opt, pcov = curve_fit(model_func, x, y, p0)
+        a, k, b = opt
+        x2 = np.linspace(10, 100, 1000)
+        y2 = model_func(x2, a, k, b)
+
+        plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
+        # plt.legend(loc='best')
+        # plt.show()
+        plt.savefig('100_results.png')
 
     def get_acc(self, paths):
         all_acc = []
@@ -107,7 +119,7 @@ class Display():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--path", type=str, default="model", required=False)
+    parser.add_argument("--path", type=str, default="model3", required=False)
     args = parser.parse_args()
     ds = Display(args.path)
     ds.run()
