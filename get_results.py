@@ -9,6 +9,8 @@ import csv
 import re
 import collections
 import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
 
 class Display():
     def __init__(self, path):
@@ -45,21 +47,28 @@ class Display():
                 nodes += res_dic[key]
                 r_writer.writerow(nodes)
 
-        for key in res_dic:
-            for i in res_dic[key]:
-                if i != -1:
-                    plt.scatter(key, i, label=key)
+        # for key in res_dic:
+        #     for i in res_dic[key]:
+        #         if i != -1:
+        #             plt.scatter(key, i, label=key)
+
+        df = pd.DataFrame.from_dict(res_dic, orient='index')
+        df.index.rename('States', inplace=True)
+        stacked = df.stack().reset_index()
+        # stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
+
+        sns.swarmplot(data=stacked, x='States', y='Acc')
 
         plt.savefig('all_results.png')
-        plt.close()
-
-        for key in res_dic:
-            for i in res_dic[key]:
-                if i != -1 and key <= 100:
-                    plt.scatter(key, i, label=key)
-
-        plt.savefig('10_results.png')
-        plt.close()
+        # plt.close()
+        #
+        # for key in res_dic:
+        #     for i in res_dic[key]:
+        #         if i != -1 and key <= 100:
+        #             plt.scatter(key, i, label=key)
+        #
+        # plt.savefig('10_results.png')
+        # plt.close()
 
     def get_acc(self, paths):
         all_acc = []
