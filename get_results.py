@@ -28,7 +28,7 @@ class Display():
             if node in res_dic.keys():
                 res_dic[node][i] = a
             else:
-                res = list(range(10))
+                res = [0]*10
                 res[i] = a
                 res_dic[node] = res
 
