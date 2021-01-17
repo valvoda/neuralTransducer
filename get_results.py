@@ -55,7 +55,8 @@ class Display():
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
-        sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States")
+        g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States")
+        g.legend_.remove()
         plt.savefig('all_results.png')
 
     def get_acc(self, paths):
