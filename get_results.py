@@ -28,13 +28,14 @@ class Display():
     def save_sheet(self, paths, all_acc):
         res_dic = dict()
         for p, a in zip(paths, all_acc):
-            node = p.split('/')[1]
-            node = int(re.sub(r'exp1_run', '', node))
-            i = int(p.split('/')[-1].strip('.log'))
-            if node in res_dic.keys():
-                res_dic[node].append(a)
-            else:
-                res_dic[node] = [a]
+            if a != -1:
+                node = p.split('/')[1]
+                node = int(re.sub(r'exp1_run', '', node))
+                i = int(p.split('/')[-1].strip('.log'))
+                if node in res_dic.keys():
+                    res_dic[node].append(a)
+                else:
+                    res_dic[node] = [a]
 
         res_dic = collections.OrderedDict(sorted(res_dic.items()))
 
