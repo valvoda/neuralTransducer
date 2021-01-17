@@ -50,7 +50,14 @@ class Display():
                 if i != -1:
                     plt.scatter(key, i, label=key)
 
-        plt.savefig('results.png')
+        plt.savefig('all_results.png')
+
+        for key in res_dic:
+            for i in res_dic[key]:
+                if i != -1 and key <= 100:
+                    plt.scatter(key, i, label=key)
+
+        plt.savefig('10_results.png')
 
     def get_acc(self, paths):
         all_acc = []
