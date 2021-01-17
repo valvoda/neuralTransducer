@@ -59,8 +59,7 @@ class Display():
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
 
-        g = sns.regplot(data=stacked, x='Observation', y='Value', scatter=True, order=2)
-        g.legend_.remove()
+        sns.regplot(data=stacked, x='Observation', y='Value', scatter=True, order=2)
 
         plt.savefig('all_results.png')
         # plt.close()
