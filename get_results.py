@@ -51,6 +51,7 @@ class Display():
                     plt.scatter(key, i, label=key)
 
         plt.savefig('all_results.png')
+        plt.close()
 
         for key in res_dic:
             for i in res_dic[key]:
