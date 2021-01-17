@@ -53,6 +53,8 @@ class Display():
         df = pd.DataFrame.from_dict(res_dic, orient='index')
         df.index.rename('# States', inplace=True)
 
+        sns.color_palette("viridis", as_cmap=True)
+
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
         g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States")
