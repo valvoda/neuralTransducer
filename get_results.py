@@ -55,7 +55,7 @@ class Display():
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
-        sns.regplot(data=stacked, x='# States', y='Acc', scatter=True, order=2)
+        sns.regplot(data=stacked, x='# States', y='Acc', scatter=True, logx=True)
         plt.savefig('all_results.png')
 
     def get_acc(self, paths):
