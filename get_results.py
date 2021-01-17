@@ -31,11 +31,12 @@ class Display():
             if a != -1:
                 node = p.split('/')[1]
                 node = int(re.sub(r'exp1_run', '', node))
-                i = int(p.split('/')[-1].strip('.log'))
-                if node in res_dic.keys():
-                    res_dic[node].append(a)
-                else:
-                    res_dic[node] = [a]
+                if node <= 100:
+                    i = int(p.split('/')[-1].strip('.log'))
+                    if node in res_dic.keys():
+                        res_dic[node].append(a)
+                    else:
+                        res_dic[node] = [a]
 
         res_dic = collections.OrderedDict(sorted(res_dic.items()))
 
@@ -46,11 +47,6 @@ class Display():
                 nodes += res_dic[key]
                 r_writer.writerow(nodes)
 
-        # for key in res_dic:
-        #     for i in res_dic[key]:
-        #         if i != -1:
-        #             plt.scatter(key, i, label=key)
-
         # import pdb
         # pdb.set_trace()
 
@@ -59,19 +55,8 @@ class Display():
 
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Value'}, inplace=True)
-
-        sns.regplot(data=stacked, x='Observation', y='Value', scatter=True, order=2)
-
+        sns.regplot(data=stacked, x='Observation', y='Value', scatter=True, order=4)
         plt.savefig('all_results.png')
-        # plt.close()
-        #
-        # for key in res_dic:
-        #     for i in res_dic[key]:
-        #         if i != -1 and key <= 100:
-        #             plt.scatter(key, i, label=key)
-        #
-        # plt.savefig('10_results.png')
-        # plt.close()
 
     def get_acc(self, paths):
         all_acc = []
