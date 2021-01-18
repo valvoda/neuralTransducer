@@ -73,7 +73,7 @@ class Display():
         a, k, b = opt
         a = a+50
         k = k+0.03
-        x2 = np.linspace(10, 100, 1000)
+        x2 = np.linspace(10, 50, 1000)
         y2 = model_func(x2, a, k, b)
 
         plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
