@@ -71,13 +71,13 @@ class Display():
         p0 = (1., 1.e-5, 1.)  # starting search koefs
         opt, pcov = curve_fit(model_func, x, y, p0)
         a, k, b = opt
-        a = a+50
-        k = k+0.03
+        a = a
+        k = k
         x2 = np.linspace(20, 30, 1000)
         y2 = model_func(x2, a, k, b)
 
-        plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
-        plt.legend(loc='best')
+        # plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
+        # plt.legend(loc='best')
         plt.savefig('100_results.png', dpi=300)
         plt.show()
 
