@@ -63,18 +63,18 @@ class Display():
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
         g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States", legend=False, palette='viridis')
-        g.set_xticks(np.arange(20, 30, 1))
+        g.set_xticks(np.arange(20, 31, 1))
 
         x = np.array(list(res_dic.keys()))
         y = np.array([np.array(i).mean() for i in res_dic.values()])
 
-        p0 = (1., 1.e-5, 1.)  # starting search koefs
-        opt, pcov = curve_fit(model_func, x, y, p0)
-        a, k, b = opt
-        a = a
-        k = k
-        x2 = np.linspace(20, 30, 1000)
-        y2 = model_func(x2, a, k, b)
+        # p0 = (1., 1.e-5, 1.)  # starting search koefs
+        # opt, pcov = curve_fit(model_func, x, y, p0)
+        # a, k, b = opt
+        # a = a
+        # k = k
+        # x2 = np.linspace(20, 30, 1000)
+        # y2 = model_func(x2, a, k, b)
 
         # plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
         # plt.legend(loc='best')
