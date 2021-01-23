@@ -68,6 +68,7 @@ class Display():
         x = np.array(list(res_dic.keys()))
         y = np.array([np.array(i).mean() for i in res_dic.values()])
 
+        plt.plot(x, y)
         # p0 = (1., 1.e-5, 1.)  # starting search koefs
         # opt, pcov = curve_fit(model_func, x, y, p0)
         # a, k, b = opt
