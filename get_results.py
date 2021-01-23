@@ -38,7 +38,7 @@ class Display():
             if a != -1:
                 node = p.split('/')[1]
                 node = int(re.sub(r'exp1_run', '', node))
-                if node <= 40 and node >= 30:
+                if node <= 10 and node >= 100:
                 # if True:
                     i = int(p.split('/')[-1].strip('.log'))
                     if node in res_dic.keys():
@@ -63,7 +63,7 @@ class Display():
         stacked = df.stack().reset_index()
         stacked.rename(columns={'level_1': 'Person', 0: 'Acc'}, inplace=True)
         g = sns.scatterplot(data=stacked, x='# States', y='Acc', hue="# States", legend=False, palette='viridis')
-        g.set_xticks(np.arange(30, 41, 1))
+        g.set_xticks(np.arange(10, 110, 10))
 
         x = np.array(list(res_dic.keys()))
         y = np.array([np.array(i).mean() for i in res_dic.values()])
@@ -79,7 +79,7 @@ class Display():
 
         # plt.plot(x2, y2, color='r', label='Fit. func: $f(x) = %.3f e^{%.3f x} %+.3f$' % (a, k, b))
         # plt.legend(loc='best')
-        plt.savefig('30-40_results.png', dpi=300)
+        plt.savefig('10-100_results.png', dpi=300)
         plt.show()
 
     def get_acc(self, paths):
