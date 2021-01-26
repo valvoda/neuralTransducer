@@ -18,13 +18,13 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for experiment in {0..9}
+  for experiment in 2 3
   do
-    for size in 200
+    for size in 50 300 100
     do
       # 10exp1_run 20exp1_run 30exp1_run 40exp1_run 60exp1_run 70exp1_run 80exp1_run 90exp1_run 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run 200exp1_run 300exp1_run 500exp1_run 700exp1_run 900exp1_run
       # 50exp2_run 100exp2_run 200exp2_run 400exp2_run 600exp2_run 800exp2_run 1000exp2_run 200exp2_run 300exp2_run 500exp2_run 700exp2_run 900exp2_run
-      for train_dir in 20exp1-loop
+      for train_dir in 26exp1_run 30exp1_run 36exp1_run
       do
         # Submit job
         bsub -W $TIME \
@@ -34,7 +34,7 @@ do
              -R "select[gpu_mtotal0>=30000]" \
              "source ~/.bashrc; \
              conda activate precedent; \
-             python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model model6/${train_dir}/${arch}/${experiment} --embed_dim 100 \
+             python src/train.py --dataset scan --train ${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model model6/${train_dir}/${size}/${experiment} --embed_dim 100 \
              --src_hs ${size} \
              --trg_hs ${size} \
              --dropout 0.5 \
