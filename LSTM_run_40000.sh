@@ -29,10 +29,9 @@ do
         bsub -W $TIME \
              -n $NUM_CPUS \
              -R "rusage[mem=${CPU_RAM},ngpus_excl_p=${NUM_GPUS}]" \
-             -R "select[gpu_model0==${GPU_MODEL}]" \
              -R "select[gpu_mtotal0>=30000]" \
              "source ~/.bashrc; \
-             conda activate precedent; \
+             conda activate nt; \
              python src/train.py --dataset scan --train Experiments_40000/${train_dir}/${experiment}/tasks_train_simple.txt --dev Experiments_40000/${train_dir}/${experiment}/tasks_train_simple.txt --test Experiments_40000/${train_dir}/${experiment}/tasks_test_simple.txt  --model LSTM_300/${size}/${experiment} --embed_dim 100 \
              --src_hs ${size} \
              --trg_hs ${size} \
