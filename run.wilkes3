@@ -71,7 +71,7 @@ application="python src/train.py --dataset scan --train Experiments_40000/${TRAI
              --max_steps 100000"
 
 source ~/.bashrc
-source activate nt
+source activate law
 
 #! Run options for the application:
 options=""
