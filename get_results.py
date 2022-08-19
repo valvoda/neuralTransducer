@@ -122,7 +122,7 @@ class Display():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--path", type=str, default="model3", required=False)
+    parser.add_argument("--path", type=str, default="model", required=False)
     args = parser.parse_args()
     ds = Display(args.path)
     ds.run()

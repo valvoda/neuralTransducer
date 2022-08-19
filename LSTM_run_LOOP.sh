@@ -9,8 +9,7 @@ CPU_RAM=16384  # RAM for each core (default: 1024)
 OUTFILE=./logs/model.oJOBID  # default: lsf.oJOBID
 
 # Load modules
-
-module load gcc/6.3.0 python_gpu/3.7.4 hdf5/1.10.1
+module load gcc/6.3.0 python_gpu/3.7.4 hdf5/1.10.1 eth_proxy
 
 # Submit job
 for arch in soft
@@ -18,13 +17,13 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for experiment in {0..100}
+  for experiment in {0..10}
   do
-    for size in 300
+    for size in 200
     do
       # 10exp1_run 20exp1_run 30exp1_run 40exp1_run 60exp1_run 70exp1_run 80exp1_run 90exp1_run 50exp1_run 100exp1_run 200exp1_run 400exp1_run 600exp1_run 800exp1_run 1000exp1_run 200exp1_run 300exp1_run 500exp1_run 700exp1_run 900exp1_run
       # 50exp2_run 100exp2_run 200exp2_run 400exp2_run 600exp2_run 800exp2_run 1000exp2_run 200exp2_run 300exp2_run 500exp2_run 700exp2_run 900exp2_run
-      for train_dir in 21exp1_run 22exp1_run 23exp1_run 24exp1_run 25exp1_run 26exp1_run 27exp1_run 28exp1_run 29exp1_run 30exp1_run 31exp1_run 32exp1_run 33exp1_run 34exp1_run 35exp1_run 36exp1_run 37exp1_run 38exp1_run 39exp1_run
+      for train_dir in 10exp1_run 20exp1_run 30exp1_run 40exp1_run 50exp1_run 60exp1_run 70exp1_run 80exp1_run 90exp1_run 100exp1_run
       do
         # Submit job
         bsub -W $TIME \
@@ -34,13 +33,12 @@ do
              -R "select[gpu_mtotal0>=30000]" \
              "source ~/.bashrc; \
              conda activate precedent; \
-             python src/train.py --dataset scan --train Dataset/${train_dir}/${experiment}/tasks_train_simple.txt --dev ${train_dir}/${experiment}/tasks_train_simple.txt --test ${train_dir}/${experiment}/tasks_test_simple.txt  --model model6/${train_dir}/${size}/${experiment} --embed_dim 100 \
+             python src/train.py --dataset scan --train Experiments_LOOP/${experiment}/tasks_train_simple.txt --dev Experiments_LOOP/${experiment}/tasks_train_simple.txt --test Experiments_LOOP/${experiment}/tasks_test_simple.txt  --model LSTM_LOOP/${size}/${experiment} --embed_dim 100 \
              --src_hs ${size} \
              --trg_hs ${size} \
              --dropout 0.5 \
              --src_layer 2 \
              --trg_layer 2 \
-             --max_norm 5 \
              --shuffle \
              --arch ${arch} \
              --gpuid 0 \
