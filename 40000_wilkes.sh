@@ -6,7 +6,7 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for experiment in {0..100}
+  for experiment in {0..1}
   do
     for size in 300
     do
@@ -15,6 +15,7 @@ do
       for train_dir in 21exp1_run 22exp1_run 23exp1_run 24exp1_run 25exp1_run 26exp1_run 27exp1_run 28exp1_run 29exp1_run 30exp1_run 31exp1_run 32exp1_run 33exp1_run 34exp1_run 35exp1_run 36exp1_run 37exp1_run 38exp1_run 39exp1_run
       do
         # Submit job
+        echo ${train_dir} ${experiment} ${size} ${arch}
         TRAIN_DIR=$train_dir EXPERIMENT=$experiment SIZE=$size ARCH=$arch sbatch run.wilkes3
       done
     done
