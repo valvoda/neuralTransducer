@@ -37,10 +37,7 @@ class Display():
         for p, a in zip(paths, all_acc):
             if a != -1:
 
-                import pdb
-                pdb.set_trace()
-
-                node = p.split('/')[1]
+                node = p.split('/')[2]
                 node = int(re.sub(r'exp1_run', '', node))
                 if 10 <= node <= 100:
                 # if True:
