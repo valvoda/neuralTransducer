@@ -36,9 +36,13 @@ class Display():
         res_dic = dict()
         for p, a in zip(paths, all_acc):
             if a != -1:
+
+                import pdb
+                pdb.set_trace()
+
                 node = p.split('/')[1]
                 node = int(re.sub(r'exp1_run', '', node))
-                if node <= 10 and node >= 100:
+                if 10 <= node <= 100:
                 # if True:
                     i = int(p.split('/')[-1].strip('.log'))
                     if node in res_dic.keys():
