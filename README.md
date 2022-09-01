@@ -1,4 +1,4 @@
-# Neural Transducer
+# Learning Transductions to Test Systematic Compositionality
 
 This repo builds on a neural transducer work of Shijie Wu: https://github.com/shijie-wu/neural-transducer
 
