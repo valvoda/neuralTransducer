@@ -7,7 +7,8 @@ for arch in soft
 #approxihardinputfeed hmm hmmfull transformer universaltransformer \
 #tagtransformer taguniversaltransformer
 do
-  for experiment in {0..50}
+  #  {1..50}
+  for experiment in 0
   do
     for size in 200
     do
