@@ -3,7 +3,6 @@ import numpy as np
 from pynini import Fst, Arc
 import random
 from tqdm import tqdm
-import os
 import pickle
 from collections import Counter
 from pathlib import Path
@@ -58,11 +57,11 @@ def generate_FST(node_size):
             # empty_emmission = random.sample([0,1], 1)
             empty_emmission = np.random.randint(2, size=1)
             if empty_emmission == 1:
-                print("YES")
+                print("Empty Emissions: YES")
                 output_alphabet.pop(0)
                 output_alphabet.append(-1)
             else:
-                print("NO")
+                print("Empty Emissions: NO")
 
             print("Graph_nodes:", len(adjacency), "edges:", len(G.edges))
             print("input_alpha", input_alphabet, len(input_alphabet))
@@ -147,6 +146,7 @@ def generate_dataset(FST_dic, max_len):
         print(i[:5], "transduces:", j[:5])
     return inputs, outputs
 
+
 def find_split(outputs):
     for len_n in range(5,45):
         small_lengths = [i for i in outputs if len(i) <= len_n]
@@ -156,30 +156,32 @@ def find_split(outputs):
             print(split)
             return len_n
 
-def save_data(dataset_name, name, train_inputs, train_outputs, test_inputs, test_outputs,
-              fst, FST_dic, input_alphabet, output_alphabet, nodes, edges, exp2):
+
+def save_data(name, train_inputs, train_outputs, test_inputs, test_outputs,
+              fst, FST_dic, input_alphabet, output_alphabet, nodes, edges, out_path):
     #     make directory with number, save train file, test file, info file and fst + fst_dic
 
-    path = "./Dataset/" + dataset_name + "/" + name
-    print(path)
-    Path(path).mkdir(parents=True, exist_ok=True)
+    out_path = out_path + "/" + name
+    print(out_path)
+    Path(out_path).mkdir(parents=True, exist_ok=True)
     train_file = "tasks_train_simple.txt"
     test_file = "tasks_test_simple.txt"
-    with open(path + "/" + train_file, 'w') as f:
+    with open(out_path + "/" + train_file, 'w') as f:
         for i, o in zip(train_inputs, train_outputs):
             in_command = stringify(i)
             out_command = stringify(o)
             f.write("IN: " + in_command + "OUT: " + out_command + "\n")
 
-    with open(path + "/" + test_file, 'w') as f:
+    with open(out_path + "/" + test_file, 'w') as f:
         for i, o in zip(test_inputs, test_outputs):
             in_command = stringify(i)
             out_command = stringify(o)
             f.write("IN: " + in_command + "OUT: " + out_command + "\n")
 
-    with open(path + "/info.pickle", 'wb') as f:
+    with open(out_path + "/info.pickle", 'wb') as f:
         a = [fst, FST_dic, input_alphabet, output_alphabet, nodes, edges]
         pickle.dump(a, f, protocol=pickle.HIGHEST_PROTOCOL)
+
 
 def split_data(split, inputs, outputs):
     train_inputs = []
@@ -196,17 +198,20 @@ def split_data(split, inputs, outputs):
 
     return train_inputs, test_inputs, train_outputs, test_outputs
 
+
 def stringify(input_list):
     text = ""
     for i in input_list:
         text += str(i) + " "
     return text
 
+
 def run(dataset_n=100, node_n=50, seq_len_max=50, dataset_name="test", dataset_size=40000):
     cnt = 0
     adjacency_dic = dict()
 
-    Path('./Dataset/'+dataset_name).mkdir(parents=True, exist_ok=True)
+    out_path = './' + str(dataset_size) + '/' + dataset_name
+    Path(out_path).mkdir(parents=True, exist_ok=True)
 
     # Generate 100 SCAN like datasets
     while cnt < dataset_n:
@@ -245,11 +250,76 @@ def run(dataset_n=100, node_n=50, seq_len_max=50, dataset_name="test", dataset_s
                 test_inputs = inputs[train_size:]
                 train_outputs = outputs[:train_size]
                 test_outputs = outputs[train_size:]
-                save_data(dataset_name, str(cnt), train_inputs, train_outputs, test_inputs, test_outputs,
-                          fst, FST_dic, input_alphabet, output_alphabet, nodes, edges, False)
+                save_data(str(cnt), train_inputs, train_outputs, test_inputs, test_outputs,
+                          fst, FST_dic, input_alphabet, output_alphabet, nodes, edges, out_path)
                 cnt += 1
+
+def get_data(file):
+
+    sources, targets = [], []
+
+    with open(file, "r", encoding="utf-8") as fp:
+        for line in fp.readlines():
+            target_raw = line.split("OUT:")[1].strip()
+            source_raw = line.split("OUT:")[0].split("IN:")[1].strip()
+
+            target = target_raw.split(" ")
+            source = source_raw.split(" ")
+
+            sources.append(source)
+            targets.append(target)
+
+    return sources, targets
+
+def gen_repeats(file_path, dest_path):
+    source, target = get_data(file_path)
+    n_source, n_target = [], []
+
+    for j in list(range(len(source))):
+        switch = np.random.randint(10, size=1)[0]
+        if switch == 1 or switch == 2:
+            x = source[j]
+            x.append('-10')
+            n_source.append(x)
+            y = target[j] + target[j]
+            n_target.append(y)
+        elif switch == 3 or switch == 4:
+            x = source[j]
+            x.append('-20')
+            n_source.append(x)
+            y = target[j] + target[j] + target[j] + target[j]
+            n_target.append(y)
+        else:
+            n_source.append(source[j])
+            n_target.append(target[j])
+
+    with open(dest_path, 'w') as out_f:
+        for src, trg in zip(n_source, n_target):
+            in_command = stringify(src)
+            out_command = stringify(trg)
+            out_f.write("IN: " + in_command + "OUT: " + out_command + "\n")
+
+def make_repeats(data_path):
+    f1 = "tasks_test_simple.txt"
+    f2 = "tasks_train_simple.txt"
+    out1 = "tasks_test_loop.txt"
+    out2 = "tasks_train_loop.txt"
+
+    for i in range(100):
+        pth = data_path + "/" + str(i)
+        pth1 = pth + "/" + f1
+        pth2 = pth + "/" + f2
+        gen_repeats(pth1, pth + "/" +out1)
+        gen_repeats(pth2, pth + "/" +out2)
+
 
 if __name__ == '__main__':
 
-    for i in [21, 22, 23, 24, 25, 26, 27, 28]:
-        run(dataset_n=100, node_n=i, seq_len_max=50, dataset_name=str(i))
+    for i in range(10,110,10):
+        run(dataset_n=100, node_n=i, seq_len_max=50, dataset_name=str(i), dataset_size=20000)
+
+    for i in range(21,40):
+        run(dataset_n=100, node_n=i, seq_len_max=50, dataset_name=str(i), dataset_size=40000)
+
+    data_path = "20000/20"
+    make_repeats(data_path)
