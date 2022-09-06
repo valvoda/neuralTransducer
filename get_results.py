@@ -102,6 +102,10 @@ class Display():
         all_paths = []
         src_path = self.path
         dirs = os.listdir(src_path)
+
+        import ipdb
+        from ipdb.set_trace()
+
         for d in dirs:
             n_path = os.path.join(src_path, d)
             n_dirs = os.listdir(n_path)
